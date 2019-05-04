@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>Oauth Vk</title>
+    </head>
+    <body>
+        <h1>Friends list</h1>
+        {% for message in get_flashed_messages() %}
+            <p><b>Error</b>: {{ message }}</p>
+        {% endfor %}
+        {% if current_user.is_authenticated %}
+            <h2>Hi, {{ user }}!</h2>
+            <p><a href="{{ url_for('auth.logout') }}">Logout</a></p>
+        {% else %}
+            <h2>Login again</h2>
+            <p><a href="{{ url_for('auth.oauth_authorize', provider='vk') }}">Login with Vk</a></p>
+        {% endif %}
+        {% for friend in friends %}
+        <div> <img src="{{ friend.get('photo_50') }}">
+            <a href="https://vk.com/id{{friend.get('id')}}"> {{ friend.get('first_name') }} {{ friend.get('last_name') }} </a>
+        </div>
+        {% endfor %}
+    </body>
+</html>
