@@ -12,6 +12,8 @@ migrate = Migrate(app, db)
 def make_shell_context():
     return dict(app=app, db=db)
 
+
+@manager.command
 def deploy():
     from flask_migrate import upgrade
     upgrade()
