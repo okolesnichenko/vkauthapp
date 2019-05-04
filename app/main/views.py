@@ -2,7 +2,7 @@ from flask import request, render_template, current_app
 from flask_login import current_user
 from . import main
 from ..models import User
-from vkapi import VkApi
+from .vkapi import VkApi
 
 
 @main.route('/', methods=['GET', 'POST'])
