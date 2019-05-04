@@ -16,7 +16,7 @@ class DevelopmentConfig(Config):
     OAUTH_CREDENTIALS = {
         'vk':{
             'key':os.environ.get('VK_KEY'),
-            'secret':os.environ.get('VK_KEY')
+            'secret':os.environ.get('VK_SECRET')
         }
     }
     DEBUG = True
@@ -26,7 +26,7 @@ class ProductionConfig(Config):
     OAUTH_CREDENTIALS = {
         'vk': {
             'key': os.environ.get('VK_KEY'),
-            'secret': os.environ.get('VK_KEY')
+            'secret': os.environ.get('VK_SECRET')
         }
     }
     DEBUG = True
