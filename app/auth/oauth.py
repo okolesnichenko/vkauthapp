@@ -65,4 +65,4 @@ class VkSignIn(OAuthSignIn):
             return userdata.get('access_token'), str(userdata.get('user_id')), \
                    get_username_from_email(userdata.get('email')), userdata.get('email')
         else:
-            return None, None, None
+            return None, None, None, None
