@@ -1,9 +1,9 @@
+import os
 from flask import current_app, url_for, redirect, request
 from rauth import OAuth2Service
-import vk
-import json
 
 
+# Базовый класс OAuth авторизации и наследник (провайдер вк)
 class OAuthSignIn(object):
     providers = None
 
@@ -38,7 +38,7 @@ class VkSignIn(OAuthSignIn):
         self.service = OAuth2Service(
             name='vk',
             client_id='6969972',
-            client_secret='7DKvs0BaDpI14cVgRfiU',
+            client_secret= os.environ.get('VK_SECRET'),
             base_url='https://api.vk.com/method/',
             access_token_url='https://oauth.vk.com/access_token',
             authorize_url='https://oauth.vk.com/authorize'
@@ -49,8 +49,10 @@ class VkSignIn(OAuthSignIn):
                                                        redirect_uri=self.get_callback_url()))
 
     def callback(self):
+        # Функция получения username для вывода на странице index
         def get_username_from_email(email):
             return email[0:email.index('@')]
+
         if 'code' not in request.args:
             return None, None, None
         data = {'code': request.args['code'],
@@ -58,7 +60,8 @@ class VkSignIn(OAuthSignIn):
                 'redirect_uri': self.get_callback_url()}
         resp = self.service.get_raw_access_token(method='POST', data=data)
         userdata = resp.json()
-        if userdata:
+        # При получении ответа на запрос access токена мы получаем user_id, email, access_token
+        if userdata.get('access_token') and userdata.get('user_id') and userdata.get('email'):
             return userdata.get('access_token'), str(userdata.get('user_id')), \
                    get_username_from_email(userdata.get('email')), userdata.get('email')
         else:

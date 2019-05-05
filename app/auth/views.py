@@ -11,7 +11,7 @@ def logout():
     logout_user()
     return redirect(url_for('main.index'))
 
-
+# Функция вызова авторизации
 @auth.route('/<provider>')
 def oauth_authorize(provider):
     if not current_user.is_anonymous:
@@ -19,7 +19,7 @@ def oauth_authorize(provider):
     oauth = OAuthSignIn.get_provider(provider)
     return oauth.authorize()
 
-
+# Функция callback, для действия после авторизаци
 @auth.route('/callback/<provider>')
 def oauth_callback(provider):
     remember_me = True
