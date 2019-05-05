@@ -60,6 +60,7 @@ class VkSignIn(OAuthSignIn):
                 'redirect_uri': self.get_callback_url()}
         resp = self.service.get_raw_access_token(method='POST', data=data)
         userdata = resp.json()
+        print(userdata)
         # При получении ответа на запрос access токена мы получаем user_id, email, access_token
         if userdata:
             return userdata.get('access_token'), str(userdata.get('user_id')), \
