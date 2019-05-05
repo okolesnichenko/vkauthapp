@@ -61,7 +61,7 @@ class VkSignIn(OAuthSignIn):
         resp = self.service.get_raw_access_token(method='POST', data=data)
         userdata = resp.json()
         # При получении ответа на запрос access токена мы получаем user_id, email, access_token
-        if userdata.get('access_token') and userdata.get('user_id') and userdata.get('email'):
+        if userdata:
             return userdata.get('access_token'), str(userdata.get('user_id')), \
                    get_username_from_email(userdata.get('email')), userdata.get('email')
         else:
